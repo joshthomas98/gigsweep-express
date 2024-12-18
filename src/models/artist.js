@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const Schema = mongoose.Schema;
 
 const artistSchema = new Schema({
   artist_name: { type: String, required: true },
@@ -10,19 +10,19 @@ const artistSchema = new Schema({
   summary: { type: String },
   genre: {
     type: String,
-    enum: ["GENRE_1", "GENRE_2", "GENRE_3"],
+    enum: GENRE_CHOICES,
     required: true,
   },
-  country: { type: String, enum: ["UK", "US", "Other"], required: true },
-  county: { type: String },
-  type_of_artist: { type: String, enum: ["Type1", "Type2"], required: true },
-  user_type: { type: String, enum: ["Admin", "Artist"], required: true },
+  country: { type: String, enum: UK_COUNTRY_CHOICES, required: true },
+  county: { type: String, enum: UK_COUNTY_CHOICES, required: true },
+  type_of_artist: { type: String, enum: ARTIST_TYPES, required: true },
+  user_type: { type: String, enum: USER_TYPES, required: true },
   image: { type: String },
   featured_artist: { type: Boolean, default: false },
   facebook: { type: String },
   twitter: { type: String },
   youtube: { type: String },
-  artist_membership_type: { type: Number },
+  artist_membership_type: { type: Number, required: true },
   upcoming_gigs: [{ type: Schema.Types.Mixed }],
   gigging_distance: [{ type: String }],
 });
