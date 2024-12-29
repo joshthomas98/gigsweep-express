@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const { IS_APPROVED_CHOICES } = require("../models/choices/choices");
+
 // Define the ArtistWrittenReview schema
 const ArtistWrittenReviewSchema = new Schema({
   date_of_performance: { type: Date, default: null },
@@ -10,7 +12,7 @@ const ArtistWrittenReviewSchema = new Schema({
   rating: { type: Number, default: null },
   is_approved: {
     type: String,
-    enum: IS_APPROVED_CHOICES, // Assuming IS_APPROVED_CHOICES is an array of valid choices like 'Under review'
+    enum: IS_APPROVED_CHOICES.map((choice) => choice[0]),
     default: "Under review",
     maxlength: 100,
     default: null,

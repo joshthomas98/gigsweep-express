@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// Correctly extract the keys from the array of arrays for enum
+const { VENUE_NOTIFICATION_TYPES } = require("../models/choices/choices");
+const VENUE_NOTIFICATION_ENUM = VENUE_NOTIFICATION_TYPES.map(
+  (choice) => choice[0]
+);
+
 // Define the VenueNotification schema
 const VenueNotificationSchema = new Schema(
   {
@@ -8,7 +14,7 @@ const VenueNotificationSchema = new Schema(
     message: { type: String, required: true },
     notification_type: {
       type: [String],
-      enum: VENUE_NOTIFICATION_TYPES, // Define the available notification types
+      enum: VENUE_NOTIFICATION_ENUM, // Use the extracted keys here
       required: true,
     },
     if_gig_advertised_by_artist: { type: Number, default: null },
