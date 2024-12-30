@@ -15,6 +15,17 @@ exports.getArtists = async (req, res) => {
   }
 };
 
+// Fetch a single artist by ID
+exports.getArtistById = async (req, res) => {
+  try {
+    const artist = await Artist.findById(req.params.id);
+    if (!artist) return res.status(404).json({ error: "Artist not found" });
+    res.json(artist);
+  } catch {
+    res.status(500).json({ error: "Error fetching artist" });
+  }
+};
+
 // Create a new artist
 exports.createArtist = async (req, res) => {
   try {
@@ -23,18 +34,6 @@ exports.createArtist = async (req, res) => {
     res.status(201).json(artist);
   } catch (error) {
     res.status(400).json({ error: "Error creating artist" });
-  }
-};
-
-// Fetch a single artist by ID
-exports.getArtistById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const artist = await Artist.findById(id);
-    if (!artist) return res.status(404).json({ error: "Artist not found" });
-    res.json(artist);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching artist" });
   }
 };
 
@@ -229,7 +228,7 @@ exports.checkProfanitiesInReview = async (req, res) => {
 
   try {
     // Call Perspective API to check for toxicity in the review
-    const apiKey = "AIzaSyDEIjE6t5zbfmSljgi5jrDRhcfM0yjg-NU"; // API Key
+    const apiKey = process.env.PERSPECTIVE_API_KEY;
     const endpoint = `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${apiKey}`;
 
     // Prepare the data for the API request
