@@ -1,4 +1,4 @@
-const ArtistGig = require("../models/ArtistGig");
+const ArtistGig = require("../models/artistGig");
 
 // Fetch all artist gigs
 exports.getArtistGigs = async (req, res) => {
@@ -142,18 +142,16 @@ exports.updateArtistGigApplication = async (req, res) => {
 // Delete an Artist Gig Application by artist user ID
 exports.deleteArtistGigApplication = async (req, res) => {
   const { artistId, applicationId } = req.params;
-
   try {
     const application = await ArtistGigApplication.findOneAndDelete({
       _id: applicationId,
       artist: artistId,
     });
-
     if (!application)
       return res
         .status(404)
         .json({ error: "Artist gig application not found" });
-    res.status(204).send();
+    res.status(204);
   } catch (error) {
     res.status(500).json({ error: "Error deleting artist gig application" });
   }

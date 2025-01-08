@@ -52,7 +52,7 @@ exports.deleteArtistById = async (req, res) => {
   try {
     const artist = await Artist.findByIdAndDelete(id);
     if (!artist) return res.status(404).json({ error: "Artist not found" });
-    res.status(204).send();
+    res.status(204);
   } catch (error) {
     res.status(500).json({ error: "Error deleting artist" });
   }

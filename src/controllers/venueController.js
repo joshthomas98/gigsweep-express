@@ -51,7 +51,7 @@ exports.deleteVenueById = async (req, res) => {
   try {
     const venue = await Venue.findByIdAndDelete(id);
     if (!venue) return res.status(404).json({ error: "Venue not found" });
-    res.status(204).send();
+    res.status(204);
   } catch (error) {
     res.status(500).json({ error: "Error deleting venue" });
   }
