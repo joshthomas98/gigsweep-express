@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const { IS_APPROVED_CHOICES } = require("../models/choices/choices");
+const { IS_APPROVED_CHOICES } = require("./choices/choices");
 
 // Define the ArtistWrittenReview schema
 const ArtistWrittenReviewSchema = new Schema({

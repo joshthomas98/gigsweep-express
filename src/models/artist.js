@@ -7,7 +7,7 @@ const {
   UK_COUNTY_CHOICES,
   ARTIST_TYPES,
   USER_TYPES,
-} = require("../models/choices/choices");
+} = require("./choices/choices");
 
 const artistSchema = new Schema({
   artist_name: { type: String, required: true },

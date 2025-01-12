@@ -9,7 +9,6 @@ const {
   artistSignIn,
   searchBarArtists,
   searchArtists,
-  checkProfanitiesInReview,
 } = require("../controllers/artistController");
 
 const {
@@ -20,10 +19,10 @@ const {
   updateArtistGigById,
   deleteArtistGigById,
   getAllArtistGigApplications,
-  getArtistGigApplicationsByUserId,
+  getArtistGigApplicationById,
   createArtistGigApplication,
-  updateArtistGigApplication,
-  deleteArtistGigApplication,
+  updateArtistGigApplicationById,
+  deleteArtistGigApplicationById,
 } = require("../controllers/artistGigController");
 
 const {
@@ -42,9 +41,6 @@ router.post("/validate", artistSignIn); // Artist sign-in
 router.get("/search", searchBarArtists); // Search bar functionality
 router.post("/artist_search", searchArtists); // Search artists (advanced)
 
-// Reviews
-router.post("/review/profanity-check", checkProfanitiesInReview); // Check for profanities in a review
-
 // Artist Gigs
 router.get("/gigs", getArtistGigs); // Fetch all artist gigs
 router.get("/:artist_id/gigs", artistGigsByArtist); // Fetch gigs for a specific artist
@@ -55,18 +51,21 @@ router.delete("/gigs/:id", deleteArtistGigById); // Delete artist gig by ID
 
 // Artist Gig Applications
 router.get("/gigapplications", getAllArtistGigApplications); // Fetch all artist gig applications
-router.get("/gigapplications/:artistId", getArtistGigApplicationsByUserId); // Fetch applications by artist user ID
+router.get("/gigapplications/:artistId", getArtistGigApplicationById); // Fetch applications by artist user ID
 router.post("/gigapplications", createArtistGigApplication); // Create a new gig application
 router.put(
   "/gigapplications/:artistId/:applicationId",
-  updateArtistGigApplication
+  updateArtistGigApplicationById
 ); // Update a gig application
 router.delete(
   "/gigapplications/:artistId/:applicationId",
-  deleteArtistGigApplication
+  deleteArtistGigApplicationById
 ); // Delete a gig application
 
 // Featured Artists
 router.get("/featuredartists", getFeaturedArtists); // Fetch all featured artists
+
+// Route for searching for artists in search bar
+router.get("/artists/search", searchArtists);
 
 module.exports = router;

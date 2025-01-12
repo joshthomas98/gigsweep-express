@@ -70,10 +70,14 @@ exports.deleteArtistGigById = async (req, res) => {
   }
 };
 
-// Fetch all Artist Gig Applications
+// Applications
+
+// Fetch all Artist Gig Applications (with optional venue_id filtering)
 exports.getAllArtistGigApplications = async (req, res) => {
+  const { venue_id } = req.query;
   try {
-    const applications = await ArtistGigApplication.find().populate(
+    const filter = venue_id ? { venue: venue_id } : {};
+    const applications = await ArtistGigApplication.find(filter).populate(
       "artist_gig"
     );
     res.json(applications);
@@ -82,19 +86,18 @@ exports.getAllArtistGigApplications = async (req, res) => {
   }
 };
 
-// Fetch Artist Gig Applications for a specific artist (based on user ID)
-exports.getArtistGigApplicationsByUserId = async (req, res) => {
+// Fetch a single Artist Gig Application by id
+exports.getArtistGigApplicationById = async (req, res) => {
+  const { id } = req.params;
   try {
-    const applications = await ArtistGigApplication.find({
-      artist: req.params.artistId,
-    });
-    if (!applications)
+    const application = await ArtistGigApplication.findById(id);
+    if (!application)
       return res
         .status(404)
-        .json({ error: "No applications found for this artist" });
-    res.json(applications);
+        .json({ error: "Artist gig application not found" });
+    res.json(application);
   } catch (error) {
-    res.status(500).json({ error: "Error fetching artist gig applications" });
+    res.status(500).json({ error: "Error fetching artist gig application" });
   }
 };
 
@@ -118,17 +121,15 @@ exports.createArtistGigApplication = async (req, res) => {
   }
 };
 
-// Update an Artist Gig Application by artist user ID
-exports.updateArtistGigApplication = async (req, res) => {
-  const { artistId, applicationId } = req.params;
-
+// Update an Artist Gig Application by id
+exports.updateArtistGigApplicationById = async (req, res) => {
+  const { id } = req.params;
   try {
-    const application = await ArtistGigApplication.findOneAndUpdate(
-      { _id: applicationId, artist: artistId },
+    const application = await ArtistGigApplication.findByIdAndUpdate(
+      id,
       req.body,
       { new: true }
     );
-
     if (!application)
       return res
         .status(404)
@@ -139,19 +140,16 @@ exports.updateArtistGigApplication = async (req, res) => {
   }
 };
 
-// Delete an Artist Gig Application by artist user ID
-exports.deleteArtistGigApplication = async (req, res) => {
-  const { artistId, applicationId } = req.params;
+// Delete an Artist Gig Application by id
+exports.deleteArtistGigApplicationById = async (req, res) => {
+  const { id } = req.params;
   try {
-    const application = await ArtistGigApplication.findOneAndDelete({
-      _id: applicationId,
-      artist: artistId,
-    });
+    const application = await ArtistGigApplication.findByIdAndDelete(id);
     if (!application)
       return res
         .status(404)
         .json({ error: "Artist gig application not found" });
-    res.status(204);
+    res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: "Error deleting artist gig application" });
   }

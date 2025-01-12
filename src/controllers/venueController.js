@@ -1,5 +1,5 @@
-const Venue = require("../models/Venue");
-const VenueNotification = require("../models/VenueNotification");
+const Venue = require("../models/venue");
+const VenueNotification = require("../models/venueNotification");
 
 // Fetch all venues
 exports.getVenues = async (req, res) => {
@@ -72,14 +72,38 @@ exports.venueSignIn = async (req, res) => {
   }
 };
 
-// Fetch all venue notifications
+// Fetch notifications for a specific venue
 exports.getVenueNotifications = async (req, res) => {
+  const { venue_id } = req.params; // Get the venue_id from the route parameters
+
   try {
-    const notifications = await VenueNotification.find({
-      venue: req.params.id,
-    });
-    res.json(notifications);
+    // Fetch notifications for the venue using venue_id
+    const notifications = await VenueNotification.find({ venue: venue_id });
+
+    // If no notifications are found, return 404
+    if (!notifications.length) {
+      return res.status(404).json({ error: "No notifications found" });
+    }
+
+    // Return the notifications directly in the response
+    res.status(200).json(notifications);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Error fetching venue notifications" });
+  }
+};
+
+// Search for Venues profiles in search bar
+exports.searchVenues = async (req, res) => {
+  const query = req.query.q || ""; // Get query parameter, default to an empty string
+
+  try {
+    const venues = await Venue.find({
+      venue_name: { $regex: query, $options: "i" }, // Case-insensitive search
+    });
+    res.status(200).json(venues); // Respond with matching venues
+  } catch (error) {
+    console.error("Error searching venues:", error);
+    res.status(500).json({ error: "Error searching venues" });
   }
 };

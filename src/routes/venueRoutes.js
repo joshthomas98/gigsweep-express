@@ -8,6 +8,7 @@ const {
   deleteVenueById,
   venueSignIn,
   getVenueNotifications,
+  searchVenues,
 } = require("../controllers/venueController");
 
 const {
@@ -19,8 +20,8 @@ const {
   getAllVenueGigApplications,
   getVenueGigApplicationsByVenueId,
   createVenueGigApplication,
-  updateVenueGigApplication,
-  deleteVenueGigApplication,
+  updateVenueGigApplicationById,
+  deleteVenueGigApplicationById,
 } = require("../controllers/venueGigController");
 
 // Venues CRUD Routes
@@ -45,15 +46,12 @@ router.delete("/gigs/:id", deleteVenueGigById); // Delete a venue gig by ID
 
 // Venue Gig Applications
 router.get("/gigapplications", getAllVenueGigApplications); // Fetch all venue gig applications
-router.get("/gigapplications/:venueId", getVenueGigApplicationsByVenueId); // Fetch applications by venue ID
+router.get("/:venue_id/gigapplications", getVenueGigApplicationsByVenueId); // Fetch applications by venue ID
 router.post("/gigapplications", createVenueGigApplication); // Create a new gig application
-router.put(
-  "/gigapplications/:venueId/:applicationId",
-  updateVenueGigApplication
-); // Update a gig application
-router.delete(
-  "/gigapplications/:venueId/:applicationId",
-  deleteVenueGigApplication
-); // Delete a gig application
+router.put("/gigapplications/:id", updateVenueGigApplicationById); // Update a gig application by ID
+router.delete("/gigapplications/:id", deleteVenueGigApplicationById); // Delete a gig application by ID
+
+// Route for searching venues in search bar
+router.get("/venues/search", searchVenues);
 
 module.exports = router;

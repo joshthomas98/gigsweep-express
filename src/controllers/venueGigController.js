@@ -60,26 +60,12 @@ exports.deleteVenueGigById = async (req, res) => {
   }
 };
 
+// Applications
+
 // Fetch all Venue Gig Applications
 exports.getAllVenueGigApplications = async (req, res) => {
   try {
     const applications = await VenueGigApplication.find().populate("venue_gig");
-    res.json(applications);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching venue gig applications" });
-  }
-};
-
-// Fetch Venue Gig Applications for a specific venue (based on venue ID)
-exports.getVenueGigApplicationsByVenueId = async (req, res) => {
-  try {
-    const applications = await VenueGigApplication.find({
-      venue: req.params.venueId,
-    });
-    if (!applications)
-      return res
-        .status(404)
-        .json({ error: "No applications found for this venue" });
     res.json(applications);
   } catch (error) {
     res.status(500).json({ error: "Error fetching venue gig applications" });
@@ -91,9 +77,11 @@ exports.createVenueGigApplication = async (req, res) => {
   const { venue_gig, venue } = req.body;
 
   try {
+    // Validate and fetch the associated VenueGig
     const gig = await VenueGig.findById(venue_gig);
     if (!gig) return res.status(404).json({ error: "Venue gig not found" });
 
+    // Create and save the VenueGigApplication
     const application = new VenueGigApplication({
       venue_gig,
       venue,
@@ -106,38 +94,59 @@ exports.createVenueGigApplication = async (req, res) => {
   }
 };
 
-// Update a Venue Gig Application by venue user ID
-exports.updateVenueGigApplication = async (req, res) => {
-  const { venueId, applicationId } = req.params;
+// Fetch a single Venue Gig Application by ID
+exports.getVenueGigApplicationById = async (req, res) => {
+  const { id } = req.params;
 
   try {
-    const application = await VenueGigApplication.findOneAndUpdate(
-      { _id: applicationId, venue: venueId },
+    // Fetch the VenueGigApplication by ID
+    const application = await VenueGigApplication.findById(id).populate(
+      "venue_gig"
+    );
+    if (!application)
+      return res.status(404).json({ error: "Venue gig application not found" });
+
+    res.json(application);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching venue gig application" });
+  }
+};
+
+// Update a Venue Gig Application by ID
+exports.updateVenueGigApplicationById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Update the VenueGigApplication
+    const application = await VenueGigApplication.findByIdAndUpdate(
+      id,
       req.body,
-      { new: true }
+      {
+        new: true,
+      }
     );
 
     if (!application)
       return res.status(404).json({ error: "Venue gig application not found" });
+
     res.json(application);
   } catch (error) {
     res.status(400).json({ error: "Error updating venue gig application" });
   }
 };
 
-// Delete a Venue Gig Application by venue user ID
-exports.deleteVenueGigApplication = async (req, res) => {
-  const { venueId, applicationId } = req.params;
+// Delete a Venue Gig Application by ID
+exports.deleteVenueGigApplicationById = async (req, res) => {
+  const { id } = req.params;
 
   try {
-    const application = await VenueGigApplication.findOneAndDelete({
-      _id: applicationId,
-      venue: venueId,
-    });
+    // Delete the VenueGigApplication
+    const application = await VenueGigApplication.findByIdAndDelete(id);
 
     if (!application)
       return res.status(404).json({ error: "Venue gig application not found" });
-    res.status(204);
+
+    res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: "Error deleting venue gig application" });
   }

@@ -1,4 +1,4 @@
-const Artist = require("../models/Artist");
+const Artist = require("../models/artist");
 
 // Fetch all featured artists
 exports.getFeaturedArtists = async (req, res) => {

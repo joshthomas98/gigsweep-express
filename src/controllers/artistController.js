@@ -1,5 +1,5 @@
-const Artist = require("../models/Artist");
-const ArtistWrittenReview = require("../models/ArtistWrittenReview");
+const Artist = require("../models/artist");
+const ArtistWrittenReview = require("../models/artistWrittenReview");
 const axios = require("axios");
 
 // Fetch all artists
@@ -113,45 +113,17 @@ exports.searchArtists = async (req, res) => {
   }
 };
 
-// Check for profanities in written review
-exports.checkProfanitiesInReview = async (req, res) => {
-  const { dateOfPerformance, artistName, venueName, review, rating } = req.body;
+// Search for Artists profiles in search bar
+exports.searchArtists = async (req, res) => {
+  const query = req.query.q || ""; // Get query parameter, default to an empty string
 
   try {
-    const apiKey = process.env.PERSPECTIVE_API_KEY;
-    const endpoint = `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${apiKey}`;
-
-    const perspectiveData = {
-      comment: { text: review },
-      requestedAttributes: { TOXICITY: {} },
-    };
-
-    const response = await axios.post(endpoint, perspectiveData);
-
-    if (response.status === 200) {
-      const toxicityScore =
-        response.data.attributeScores.TOXICITY.summaryScore.value;
-      const isApproved = toxicityScore < 0.5 ? "Approved" : "Unapproved";
-
-      const writtenReview = new ArtistWrittenReview({
-        dateOfPerformance,
-        artistName,
-        venueName,
-        review,
-        rating,
-        isApproved,
-      });
-
-      await writtenReview.save();
-      res.json(writtenReview);
-    } else {
-      res
-        .status(500)
-        .json({ error: "Error occurred while checking for profanities." });
-    }
+    const artists = await Artist.find({
+      artist_name: { $regex: query, $options: "i" }, // Case-insensitive search
+    });
+    res.status(200).json(artists); // Respond with matching artists
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Error checking profanities or saving the review." });
+    console.error("Error searching artists:", error);
+    res.status(500).json({ error: "Error searching artists" });
   }
 };
