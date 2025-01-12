@@ -26,6 +26,10 @@ const {
   deleteArtistGigApplication,
 } = require("../controllers/artistGigController");
 
+const {
+  getFeaturedArtists,
+} = require("../controllers/featuredArtistController");
+
 // Artists CRUD Routes
 router.get("/", getArtists); // Fetch all artists
 router.get("/:id", getArtistById); // Fetch a single artist by ID
@@ -61,5 +65,8 @@ router.delete(
   "/gigapplications/:artistId/:applicationId",
   deleteArtistGigApplication
 ); // Delete a gig application
+
+// Featured Artists
+router.get("/featuredartists", getFeaturedArtists); // Fetch all featured artists
 
 module.exports = router;
