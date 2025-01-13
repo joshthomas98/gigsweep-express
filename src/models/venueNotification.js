@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Correctly extract the keys from the array of arrays for enum
-const { VENUE_NOTIFICATION_TYPES } = require("../models/choices/choices");
+const { VENUE_NOTIFICATION_TYPES } = require("./choices/choices");
 const VENUE_NOTIFICATION_ENUM = VENUE_NOTIFICATION_TYPES.map(
   (choice) => choice[0]
 );

@@ -1,4 +1,4 @@
-const MembershipOption = require("../models/MembershipOption");
+const MembershipOption = require("../models/MembershipOptions");
 
 // Fetch all membership options
 exports.getAllMembershipOptions = async (req, res) => {

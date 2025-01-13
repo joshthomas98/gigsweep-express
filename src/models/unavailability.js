@@ -1,17 +1,20 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// Import the Artist model
+const Artist = require("./Artist");
+
 // Define the schema
 const UnavailabilitySchema = new Schema({
   artist: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Artist",
     required: true,
-  }, // ForeignKey to Artist
+  },
   date: {
     type: Date,
     required: true,
-  }, // DateField
+  },
   status: {
     type: String,
     default: "Unavailable",
@@ -24,8 +27,8 @@ const UnavailabilitySchema = new Schema({
   },
 });
 
-// Handle cascading delete for ForeignKey (on_delete=models.CASCADE)
-ArtistSchema.pre("remove", async function (next) {
+// Handle cascading delete for ForeignKey
+UnavailabilitySchema.pre("remove", async function (next) {
   try {
     // Delete related unavailability documents
     await Unavailability.deleteMany({ artist: this._id });

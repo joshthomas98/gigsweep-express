@@ -1,5 +1,5 @@
-const Venue = require("../models/venue");
-const VenueNotification = require("../models/venueNotification");
+const Venue = require("../models/Venue");
+const VenueNotification = require("../models/VenueNotification");
 
 // Fetch all venues
 exports.getVenues = async (req, res) => {

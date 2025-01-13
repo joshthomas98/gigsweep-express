@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Correctly import STATUS_CHOICES and extract the enum values
-const { STATUS_CHOICES } = require("../models/choices/choices");
+const { STATUS_CHOICES } = require("./choices/choices");
 const STATUS_ENUM = STATUS_CHOICES.map((choice) => choice[0]); // Extract keys
 
 // Define the ArtistGigApplication schema

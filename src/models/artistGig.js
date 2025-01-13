@@ -9,7 +9,7 @@ const {
   USER_TYPES,
   ACT_TYPES,
   STATUS_CHOICES,
-} = require("../models/choices/choices");
+} = require("./choices/choices");
 
 const ArtistGigSchema = new Schema({
   original_artist: {

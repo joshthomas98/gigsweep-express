@@ -1,5 +1,5 @@
 const e = require("cors");
-const NewsletterSignup = require("../models/newsletterSignup");
+const NewsletterSignup = require("../models/NewsletterSignup");
 
 // Fetch all newsletter signups
 exports.getAllNewsletterSignups = async (req, res) => {

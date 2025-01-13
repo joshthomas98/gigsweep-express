@@ -1,5 +1,5 @@
-const ArtistGig = require("../models/artistGig");
-const VenueGig = require("../models/venueGig");
+const ArtistGig = require("../models/ArtistGig");
+const VenueGig = require("../models/VenueGig");
 
 // Gig Search Controller
 exports.gigSearch = async (req, res) => {

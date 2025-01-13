@@ -1,5 +1,5 @@
-const Artist = require("../models/artist");
-const ArtistWrittenReview = require("../models/artistWrittenReview");
+const Artist = require("../models/Artist");
+const ArtistWrittenReview = require("../models/ArtistWrittenReview");
 const axios = require("axios");
 
 // Fetch all artists

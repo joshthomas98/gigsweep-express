@@ -1,4 +1,4 @@
-const ArtistWrittenReview = require("../models/artistWrittenReview");
+const ArtistWrittenReview = require("../models/ArtistWrittenReview");
 
 // Get all artist written reviews
 exports.getAllArtistWrittenReviews = async (req, res) => {

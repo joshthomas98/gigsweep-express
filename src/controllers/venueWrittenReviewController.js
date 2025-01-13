@@ -1,4 +1,4 @@
-const VenueWrittenReview = require("../models/venueWrittenReview");
+const VenueWrittenReview = require("../models/VenueWrittenReview");
 
 // Get all venue written reviews
 exports.getAllVenueWrittenReviews = async (req, res) => {

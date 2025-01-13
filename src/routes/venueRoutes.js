@@ -18,7 +18,7 @@ const {
   updateVenueGigById,
   deleteVenueGigById,
   getAllVenueGigApplications,
-  getVenueGigApplicationsByVenueId,
+  getVenueGigApplicationById,
   createVenueGigApplication,
   updateVenueGigApplicationById,
   deleteVenueGigApplicationById,
@@ -46,7 +46,7 @@ router.delete("/gigs/:id", deleteVenueGigById); // Delete a venue gig by ID
 
 // Venue Gig Applications
 router.get("/gigapplications", getAllVenueGigApplications); // Fetch all venue gig applications
-router.get("/:venue_id/gigapplications", getVenueGigApplicationsByVenueId); // Fetch applications by venue ID
+router.get("/:venue_id/gigapplications", getVenueGigApplicationById); // Fetch applications by venue ID
 router.post("/gigapplications", createVenueGigApplication); // Create a new gig application
 router.put("/gigapplications/:id", updateVenueGigApplicationById); // Update a gig application by ID
 router.delete("/gigapplications/:id", deleteVenueGigApplicationById); // Delete a gig application by ID

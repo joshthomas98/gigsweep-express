@@ -5,6 +5,8 @@ const {
   createArtistWrittenReview,
   getArtistWrittenReviewById,
   updateArtistWrittenReviewById,
+  deleteArtistWrittenReviewById,
+  checkProfanitiesInReview,
 } = require("../controllers/artistWrittenReviewController");
 
 // Routes for Artist Written Reviews
@@ -12,10 +14,7 @@ router.get("/", getAllArtistWrittenReviews);
 router.post("/", createArtistWrittenReview);
 router.get("/:id", getArtistWrittenReviewById);
 router.put("/:id", updateArtistWrittenReviewById);
-router.delete(
-  "/:id",
-  artistWrittenReviewController.deleteArtistWrittenReviewById
-);
+router.delete("/:id", deleteArtistWrittenReviewById);
 router.post(
   "/artist_written_review_check_profanities/",
   checkProfanitiesInReview

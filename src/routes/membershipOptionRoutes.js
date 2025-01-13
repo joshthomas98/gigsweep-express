@@ -6,7 +6,7 @@ const {
   createMembershipOption,
   updateMembershipOptionById,
   deleteMembershipOptionById,
-} = require("../controllers/membershipOptionsController");
+} = require("../controllers/membershipOptionController");
 
 // Route to fetch all membership options
 router.get("/", getAllMembershipOptions);

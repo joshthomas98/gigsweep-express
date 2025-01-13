@@ -1,4 +1,4 @@
-const ArtistGig = require("../models/artistGig");
+const ArtistGig = require("../models/ArtistGig");
 
 // Fetch all artist gigs
 exports.getArtistGigs = async (req, res) => {

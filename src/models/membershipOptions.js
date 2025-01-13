@@ -1,10 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const { USER_TYPES } = require("./choices/choices");
 
 // Define the MembershipOptions schema
 const MembershipOptionsSchema = new Schema({
   membership_id: { type: Number, default: null },
-  type_of_user: { type: String, enum: USER_TYPES, default: null },
+  type_of_user: {
+    type: String,
+    enum: USER_TYPES.map((choice) => choice[0]),
+    default: null,
+  },
   title: { type: String, required: true, maxlength: 100 },
   description: { type: String, default: null },
   price: { type: String, default: null, maxlength: 50 },
