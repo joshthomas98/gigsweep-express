@@ -2,15 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const { DateTime } = require("luxon"); // Optional: To handle date and time formatting more easily
 
-const {
-  GENRE_CHOICES,
-  UK_COUNTRY_CHOICES,
-  ARTIST_TYPES,
-  USER_TYPES,
-  ACT_TYPES,
-  STATUS_CHOICES,
-} = require("./choices/choices");
-
 const ArtistGigSchema = new Schema({
   original_artist: {
     type: Schema.Types.ObjectId,
@@ -27,32 +18,46 @@ const ArtistGigSchema = new Schema({
   country_of_venue: {
     type: String,
     maxlength: 100,
-    enum: UK_COUNTRY_CHOICES.map((choice) => choice[0]),
+    enum: ["England", "Wales", "Scotland", "Northern Ireland"],
     default: null,
   },
   genre_of_gig: {
     type: String,
     maxlength: 50,
-    enum: GENRE_CHOICES.map((choice) => choice[0]),
+    enum: [
+      "Rock",
+      "Pop",
+      "Jazz",
+      "Country",
+      "Hip Hop",
+      "R&B",
+      "Electronic",
+      "Classical",
+      "Reggae",
+      "Metal",
+      "Folk",
+      "Blues",
+      "World Music",
+    ],
     default: null,
   },
   type_of_gig: {
     type: String,
     maxlength: 50,
-    enum: ACT_TYPES.map((choice) => choice[0]),
+    enum: ["Original Music", "Covers", "Both"],
     default: null,
   },
   type_of_artist: {
     type: String,
     maxlength: 50,
-    enum: ARTIST_TYPES.map((choice) => choice[0]),
+    enum: ["Full band", "Solo artist", "Duo"],
     default: null,
   },
   payment: { type: Number, default: null },
   user_type: {
     type: String,
     maxlength: 50,
-    enum: USER_TYPES.map((choice) => choice[0]),
+    enum: ["Artist", "Venue"],
     default: null,
   },
   num_applications: { type: Number, default: 0 },
@@ -60,7 +65,7 @@ const ArtistGigSchema = new Schema({
   reason_for_advertising: { type: String, default: null },
   status: {
     type: [String],
-    enum: STATUS_CHOICES.map((choice) => choice[0]),
+    enum: ["Active", "Transferred", "Past"],
     default: ["Active"],
     maxlength: 200,
   },

@@ -1,11 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Correctly import STATUS_CHOICES and extract the enum values
-const { STATUS_CHOICES } = require("./choices/choices");
-const STATUS_ENUM = STATUS_CHOICES.map((choice) => choice[0]); // Extract keys
-
-// Define the ArtistGigApplication schema
+// Define the ArtistGigApplication schema with hardcoded status values
 const ArtistGigApplicationSchema = new Schema({
   artist: { type: Schema.Types.ObjectId, ref: "Artist", default: null },
   artist_gig: { type: Schema.Types.ObjectId, ref: "ArtistGig", default: null },
@@ -19,7 +15,7 @@ const ArtistGigApplicationSchema = new Schema({
   applied_at: { type: Date, default: Date.now },
   status: {
     type: [String],
-    enum: STATUS_ENUM, // Use the extracted enum values here
+    enum: ["Active", "Transferred", "Past"],
     default: ["Active"],
     maxlength: 200,
   },

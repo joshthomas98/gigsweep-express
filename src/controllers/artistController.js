@@ -25,11 +25,13 @@ exports.getArtistById = async (req, res) => {
 
 // Create a new artist
 exports.createArtist = async (req, res) => {
+  console.log(req.body);
   try {
     const artist = new Artist(req.body);
     await artist.save();
     res.status(201).json(artist);
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Error creating artist" });
   }
 };

@@ -26,13 +26,29 @@ exports.getMembershipOptionById = async (req, res) => {
 };
 
 // Create a new membership option
+// exports.createMembershipOption = async (req, res) => {
+//   try {
+//     const membershipOption = new MembershipOption(req.body);
+//     await membershipOption.save();
+//     res.status(201).json(membershipOption);
+//   } catch (error) {
+//     res.status(400).json({ error: "Error creating membership option" });
+//   }
+// };
+
 exports.createMembershipOption = async (req, res) => {
   try {
-    const membershipOption = new MembershipOption(req.body);
-    await membershipOption.save();
-    res.status(201).json(membershipOption);
+    const membershipOptions = req.body;
+    const savedMembershipOptions = await MembershipOption.insertMany(
+      membershipOptions
+    ); // Insert multiple documents
+    res.status(201).json(savedMembershipOptions);
   } catch (error) {
-    res.status(400).json({ error: "Error creating membership option" });
+    console.error(error);
+    res.status(400).json({
+      error: "Error creating membership option",
+      details: error.message,
+    });
   }
 };
 
